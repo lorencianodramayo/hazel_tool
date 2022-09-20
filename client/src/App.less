@@ -1,0 +1,155 @@
+@import "~antd/dist/antd.less";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;1,400&display=swap");
+
+body {
+  background-color: #212428;
+  font-family: "Montserrat", sans-serif;
+
+  .home {
+    padding: 3em 10em;
+    height: 100vh;
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .title {
+        color: #fff;
+        font-weight: 700;
+        span {
+          color: #ff014f;
+        }
+      }
+
+      .description {
+        color: #c4cfde;
+      }
+
+      .input-link {
+        background-color: transparent;
+        border-radius: 0.5em;
+        color: #fff;
+        box-shadow: 10px 10px 19px #1c1e22, -10px -10px 19px #262a2e;
+        margin-top: 0.5em;
+        input {
+          background-color: transparent;
+          color: #fff;
+        }
+      }
+
+      .selection {
+        width: -webkit-fill-available;
+        .ant-select-selector {
+          background-color: transparent;
+          border-radius: 0.5em;
+          color: #fff;
+          box-shadow: 10px 10px 19px #1c1e22, -10px -10px 19px #262a2e;
+          margin-top: 0.5em;
+        }
+        .ant-select-arrow {
+          margin-top: -2px;
+          color: #fff;
+        }
+      }
+
+      .generate-button {
+        color: #fff;
+        margin-top: 0.5em;
+        background-color: transparent;
+        box-shadow: 10px 10px 19px #1c1e22, -10px -10px 19px #262a2e;
+        span {
+          width: 100%;
+        }
+        :hover,
+        :focus {
+          color: #ff014f;
+        }
+      }
+    }
+  }
+
+  .list-card:hover {
+    box-shadow: 1px 3px 20px 0px #84878d42, 1px 0px 20px 0px #84878d42;
+  }
+
+  .drawer-affix-cancel {
+    top: 18px;
+    left: -120px;
+    height: fit-content;
+    display: flex;
+    z-index: 2;
+    position: absolute;
+    align-items: flex-start;
+    justify-content: flex-start;
+    p {
+      width: 120px;
+      color: #252525;
+      cursor: pointer;
+      padding: 1em;
+      background: #757575;
+      font-weight: bold;
+      user-select: none;
+      text-align: left;
+      border-radius: 0.4em 0 0 0.4em;
+      margin: 0;
+      box-shadow: -4px 1px 5px 0px #84878d42, 0px -7px 10px 0px #84878d42;
+    }
+  }
+
+  .ant-drawer-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 0.8em;
+    color: rgb(134 134 134 / 85%);
+  }
+
+  .drawer-affix-language {
+    top: 79px;
+    left: -120px;
+    height: fit-content;
+    display: flex;
+    z-index: 2;
+    position: absolute;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    p {
+      width: 120px;
+      color: #252525;
+      cursor: pointer;
+      padding: 1em;
+      background: #faad14;
+      text-align: center;
+      font-weight: bold;
+      user-select: none;
+      border-radius: 0.4em 0 0 0.4em;
+      margin: 0;
+      box-shadow: -4px 1px 5px 0px #84878d42, 0px -7px 10px 0px #84878d42;
+    }
+  }
+
+  .drawer-affix-generate {
+    top: 140px;
+    left: -120px;
+    height: fit-content;
+    display: flex;
+    z-index: 2;
+    position: absolute;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    p {
+      width: 120px;
+      color: #fff;
+      cursor: pointer;
+      padding: 1em;
+      background: #ff014f;
+      text-align: left;
+      font-weight: bold;
+      user-select: none;
+      border-radius: 0.4em 0 0 0.4em;
+      margin: 0;
+      box-shadow: -4px 1px 5px 0px #84878d42, 0px -7px 10px 0px #84878d42;
+    }
+  }
+}
