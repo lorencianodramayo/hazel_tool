@@ -3,6 +3,7 @@ import _ from "lodash";
 
 // Global Component
 import GlobalModal from "../GlobalModal";
+import CustomLanguage from '../CustomLanguage';
 
 import {
   Card,
@@ -170,7 +171,7 @@ export default function DynamicList({
             }
           })}
       </Space>
-      <GlobalModal title="Add New Language" isVisible={openModal} onClose={() => setOpenModal(!openModal)} footer={false} component={"hello"} />
+      <GlobalModal title="Add New Language" isVisible={openModal} onClose={() => setOpenModal(!openModal)} footer={false} component={<CustomLanguage />} />
     </>
   );
 }
