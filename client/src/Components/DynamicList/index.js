@@ -34,6 +34,7 @@ const options = [
 
 export default function DynamicList({
   onClose,
+  onGenerate,
   dynamicElements,
   defaultValues,
 }) {
@@ -80,7 +81,7 @@ export default function DynamicList({
           </div>
         </Popover>
 
-        <div className="drawer-affix-generate">
+        <div className="drawer-affix-generate" onClick={onGenerate}>
           <p>
             <CoffeeOutlined /> Generate
           </p>

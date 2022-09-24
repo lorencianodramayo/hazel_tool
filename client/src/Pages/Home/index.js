@@ -16,6 +16,10 @@ import SelectInput from '../../Components/SelectInput';
 import GlobalDrawer from '../../Components/GlobalDrawer';
 import DynamicList from '../../Components/DynamicList';
 
+// helpers
+
+import { cartesian, updateObject } from '../../services/helpers';
+
 import { Col, Row, Typography, Button } from 'antd';
 
 import {
@@ -63,9 +67,33 @@ export default function Home() {
         setDrawerOpen(true);
     }
 
+    const handleGenerate = () => {
+
+        const combinedData = cartesian(templateData?.possibleValues).map((combination) => {
+            return {
+                name: combination.join('-'),
+                defaultValues: updateObject(templateData?.defaultDynamicFieldsValues, combination.reduce(function (result, field, index) {
+                    result[Object.keys(templateData?.possibleValues)[index]] = field;
+                    return result;
+                }, {}))
+            }
+        });
+
+        console.log(
+            {
+                size: templateData?.size,
+                template: templateData?.name,
+                version: _.filter(_.filter(briefData?.templates, (data) => data?._id === selectedTemplate)[0]?.templateVersion?.map((data, index) =>
+                    !_.isEmpty(data?.versionName) ? data?.id === selectedVersion && data?.versionName : data?.id === selectedVersion && `Version ${index + 1}`
+                ), (_f) => _f !== false)[0],
+                generation: combinedData
+            }
+        );
+    }
+
     return (
         <>
-            <ParticleBackground settings={settings4} style={{position: 'absolute'}}/>
+            <ParticleBackground settings={settings4} style={{ position: 'absolute' }} />
             <Row className='home'>
                 <Col xs={24} sm={24} md={16} lg={12} className='left-panel'>
                     <Title level={1} className='title'>Concept <span>QA Tool</span></Title>
@@ -106,20 +134,20 @@ export default function Home() {
                         }
                         <Col span={24}>
                             {
-                                !_.isEmpty(selectedVersion) && <Button className="generate-button" size="large" block onClick={handleConfigure}>{ isTemplateFetching ? <LoadingOutlined /> : `Configure` }</Button>
+                                !_.isEmpty(selectedVersion) && <Button className="generate-button" size="large" block onClick={handleConfigure}>{isTemplateFetching ? <LoadingOutlined /> : `Configure`}</Button>
                             }
                         </Col>
                     </Row>
                 </Col>
 
             </Row>
-            <GlobalDrawer 
-                size="large" 
-                title={`${templateData?.size}-${templateData?.name}`} 
-                onClose={handleDrawer} 
-                open={drawerOpen && !_.isEmpty(templateData)} 
-                component={<DynamicList onClose={handleDrawer} dynamicElements={templateData?.dynamicElements} defaultValues={templateData?.defaultDynamicFieldsValues}/>}
-                placement="right" 
+            <GlobalDrawer
+                size="large"
+                title={`${templateData?.size}-${templateData?.name}`}
+                onClose={handleDrawer}
+                open={drawerOpen && !_.isEmpty(templateData)}
+                component={<DynamicList onClose={handleDrawer} onGenerate={handleGenerate} dynamicElements={templateData?.dynamicElements} defaultValues={templateData?.defaultDynamicFieldsValues} />}
+                placement="right"
             />
         </>
     );
