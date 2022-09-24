@@ -8,7 +8,8 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 8080; // Step 1
 
-const CreativesAPI = require("./routes/AdlibAPI");
+const AdlibAPI = require("./routes/AdlibAPI");
+const TemplateAPI = require("./routes/TemplateAPI");
 
 require("dotenv").config();
 
@@ -44,7 +45,8 @@ if (process.env.NODE_ENV === "production") {
   // HTTP request logger
 app.use(morgan("tiny"));
 
-app.use("/AdlibAPI", CreativesAPI);
+app.use("/AdlibAPI", AdlibAPI);
+app.use("/TemplateAPI", TemplateAPI);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));

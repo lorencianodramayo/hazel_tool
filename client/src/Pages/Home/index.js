@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 
 // reducers
-import { reqeustTemnplates, reqeustBrief, resetAll } from '../../store/reducers/templates';
+import { requestTemplates, requestBrief, resetAll, saveTemplate } from '../../store/reducers/templates';
 
 // Components
 import SearchInput from '../../Components/SearchInput';
@@ -29,7 +29,7 @@ import { settings4 } from '../../services/utils/extra/background';
 
 const { Title } = Typography;
 
-export default function Home() {
+export default function Home () {
     const dispatch = useDispatch();
     const [link, setLink] = useState('');
     const [selectedTemplate, setSelectedTemplate] = useState('');
@@ -44,7 +44,7 @@ export default function Home() {
         const { value } = e.target;
         dispatch(resetAll());
 
-        !_.isEmpty(value) && dispatch(reqeustBrief(value));
+        !_.isEmpty(value) && dispatch(requestBrief(value));
         setLink(value);
         setSelectedVersion('');
     }
@@ -58,7 +58,7 @@ export default function Home() {
     const handleConfigure = (e) => {
         e.preventDefault();
 
-        dispatch(reqeustTemnplates({
+        dispatch(requestTemplates({
             platform: link.split('/')[2].split(".")[0],
             templateId: selectedVersion,
             partnerId: _.filter(briefData?.templates, (data) => data?._id === selectedTemplate)[0]?.partnerId
@@ -79,15 +79,16 @@ export default function Home() {
             }
         });
 
-        console.log(
-            {
+        dispatch(saveTemplate
+            ({
                 size: templateData?.size,
-                template: templateData?.name,
+                name: templateData?.name,
+                template: templateData?.url,
                 version: _.filter(_.filter(briefData?.templates, (data) => data?._id === selectedTemplate)[0]?.templateVersion?.map((data, index) =>
                     !_.isEmpty(data?.versionName) ? data?.id === selectedVersion && data?.versionName : data?.id === selectedVersion && `Version ${index + 1}`
                 ), (_f) => _f !== false)[0],
                 generation: combinedData
-            }
+            })
         );
     }
 
