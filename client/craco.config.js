@@ -15,10 +15,15 @@ module.exports = {
     },
   },
   devServer: (devServerConfig, { env, paths }) => {
+
+    
     devServerConfig = {
+      magicHtml: true,
+      historyApiFallback: true,
       proxy: {
         '/AdlibAPI': 'http://localhost:8080',
         '/TemplateAPI': 'http://localhost:8080',
+        '/CreativeAPI': 'http://localhost:8080',
       },
       onBeforeSetupMiddleware: undefined,
       onAfterSetupMiddleware: undefined,

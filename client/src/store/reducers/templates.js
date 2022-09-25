@@ -6,7 +6,11 @@ import {
     getTemplateSelected,
 } from "../../services/api/Adlib/adlib";
 
-import { setTemplate, setBucket, setGeneration } from "../../services/api/Adlib/template";
+import { 
+    setTemplate, 
+    setBucket, 
+    setGeneration 
+} from "../../services/api/Adlib/template";
 
 const initialState = {
     brief: {
@@ -135,18 +139,18 @@ export const requestTemplates = (params) => async (dispatch) => {
     }
 };
 
-export const saveTemplate = (params) => async (dispatch) => {
+export const saveTemplate = (params, navigate) => async (dispatch) => {
     dispatch(initSaving());
     const { status: saveStatus, data: saveData } = await setTemplate({ 
         name: params?.name,
-        size: params?.name,
+        size: params?.size,
         version: params?.version
     });
 
     if (saveStatus === 200){
         dispatch(initBucket());
         const { status: bucketStatus, data: bucketData } = await setBucket({
-            templateId: 1,
+            templateId: saveData?._id,
             templateUrl: params?.template,
         }); 
         console.log(saveData);
@@ -154,12 +158,12 @@ export const saveTemplate = (params) => async (dispatch) => {
         if (bucketStatus === 200){
             dispatch(initGenerate());
             const { status: generationStatus, data: generationData } = await setGeneration({
-                templateId: 1,
+                templateId: saveData?._id,
                 generation: params?.generation,
             });
             console.log(bucketData);
             if (generationStatus === 200) {
-                console.log(generationData);
+                navigate(`/playground/${generationData?.templateId}`);
             }
         }
     }

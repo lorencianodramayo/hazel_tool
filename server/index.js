@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 8080; // Step 1
 
 const AdlibAPI = require("./routes/AdlibAPI");
 const TemplateAPI = require("./routes/TemplateAPI");
+const CreativeAPI = require("./routes/CreativeAPI");
 
 require("dotenv").config();
 
@@ -47,6 +48,7 @@ app.use(morgan("tiny"));
 
 app.use("/AdlibAPI", AdlibAPI);
 app.use("/TemplateAPI", TemplateAPI);
+app.use("/CreativeAPI", CreativeAPI)
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build", "index.html"));

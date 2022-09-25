@@ -50,33 +50,34 @@
             },
             setValueInElement: m,
             setValues: function (e) {
-                var t;
-                if (
-                    (void 0 === (t = e.newValues) && (t = {}),
-                        0 !== Object.keys(t).length &&
-                        (Object.keys(e.newValues).forEach(function (t) {
-                            var n = e.newValues[t],
-                                i = n.value,
-                                a = n.attr;
-                            if (window.ADLBIsJsBanner) return (defaultValues[t] = i);
-                            m(t, i, a);
-                        }),
-                            (function () {
-                                try {
-                                    if (populate) return populate();
-                                } catch (e) { }
-                                Object.keys(gwd).forEach(function (e) {
-                                    if (e.includes("populateDynamic"))
-                                        try {
-                                            gwd[e]();
-                                        } catch (e) { }
-                                });
-                            })()),
-                        window.ADLBIsJsBanner)
-                )
-                    try {
-                        initDynamic2();
-                    } catch (e) { }
+                defaultValues = e;
+                // var t;
+                // if (
+                //     (void 0 === (t = e.newValues) && (t = {}),
+                //         0 !== Object.keys(t).length &&
+                //         (Object.keys(e.newValues).forEach(function (t) {
+                //             var n = e.newValues[t],
+                //                 i = n.value,
+                //                 a = n.attr;
+                //             if (window.ADLBIsJsBanner) return (defaultValues[t] = i);
+                //             m(t, i, a);
+                //         }),
+                //             (function () {
+                //                 try {
+                //                     if (populate) return populate();
+                //                 } catch (e) { }
+                //                 Object.keys(gwd).forEach(function (e) {
+                //                     if (e.includes("populateDynamic"))
+                //                         try {
+                //                             gwd[e]();
+                //                         } catch (e) { }
+                //                 });
+                //             })()),
+                //         window.ADLBIsJsBanner)
+                // )
+                //     try {
+                //         initDynamic2();
+                //     } catch (e) { }
             },
             sendVideoStatus: function (e, t, n) {
                 var i = { id: f(), status: e, type: a, muted: t, withBigPlayButton: n };
@@ -162,5 +163,5 @@
         window.addEventListener("adinitialized", function () {
             p();
         }),
-        (document.domain = "http://localhost:3000/");
+        (document.domain = "storage.googleapis.com");
 })();

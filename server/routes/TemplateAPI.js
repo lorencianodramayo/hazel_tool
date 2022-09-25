@@ -1,20 +1,47 @@
 const express = require("express");
 const router = express.Router();
 
-router.post("/", (req, res) => {
-    console.log(req.body);
+// models
+const CreativeModel = require("../models/CreativeModel");
+const VariantsModel = require("../models/VariantsModel");
 
-    return res.status(200).json(req.body)
+// helpers
+const { save2Cloud } = require("../helpers/bucket");
+
+router.post("/", (req, res) => {
+    const creative = new CreativeModel(req.body);
+
+    creative.save((error, result) => {
+        if (error) {
+            return res
+                .status(500)
+                .json({ msg: "Sorry, internal server errors" });
+        }
+
+        return res.status(200).json(result)
+    });
 });
 
-router.post("/bucket", (req, res) => {
-    console.log(req.body);
-    res.status(200).json(req.body)
+router.post("/bucket", async (req, res) => {
+    let result = await save2Cloud(req?.body?.templateUrl, req?.body?.templateId, req.get('referer'));
+
+    if(result){
+        return res.status(200).json({ message: 'Upload' })
+    }
 });
 
 router.post("/generation", (req, res) => {
-    console.log(req.body);
-    res.status(200).json(req.body)
+    const variants = new VariantsModel(req.body);
+
+    variants.save((error, result) => {
+        if (error) {
+            return res
+                .status(500)
+                .json({ msg: "Sorry, internal server errors" });
+        }
+
+        return res.status(200).json(result)
+    });
 })
 
 module.exports = router;

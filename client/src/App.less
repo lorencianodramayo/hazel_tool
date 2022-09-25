@@ -2,19 +2,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;1,400&display=swap");
 
 body {
-  background-color: #212428;
-  font-family: "Montserrat", sans-serif;
-
   .home {
+    background-color: #212428;
+    font-family: "Montserrat", sans-serif;
     padding: 3em 10em;
     height: 100vh;
+
     .left-panel {
       display: flex;
       flex-direction: column;
       justify-content: center;
+
       .title {
         color: #fff;
         font-weight: 700;
+
         span {
           color: #ff014f;
         }
@@ -30,6 +32,7 @@ body {
         color: #fff;
         box-shadow: 10px 10px 19px #1c1e22, -10px -10px 19px #262a2e;
         margin-top: 0.5em;
+
         input {
           background-color: transparent;
           color: #fff;
@@ -38,6 +41,7 @@ body {
 
       .selection {
         width: -webkit-fill-available;
+
         .ant-select-selector {
           background-color: transparent;
           border-radius: 0.5em;
@@ -45,6 +49,7 @@ body {
           box-shadow: 10px 10px 19px #1c1e22, -10px -10px 19px #262a2e;
           margin-top: 0.5em;
         }
+
         .ant-select-arrow {
           margin-top: -2px;
           color: #fff;
@@ -56,15 +61,53 @@ body {
         margin-top: 0.5em;
         background-color: transparent;
         box-shadow: 10px 10px 19px #1c1e22, -10px -10px 19px #262a2e;
+
         span {
           width: 100%;
         }
+
         :hover,
         :focus {
           color: #ff014f;
         }
       }
     }
+  }
+
+  .playground {
+    .iframe-base {
+      border: 1px solid;
+      border-radius: 5px;
+      padding: 0 10px;
+      background-color: #fff;
+      width: fit-content;
+
+      .iframe-title {
+        position: relative;
+        width: 100%;
+        padding: 0 4px 4px 0;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0;
+      }
+
+      .iframe-container {
+        background-color: #fff;
+        border: 0;
+        box-shadow: 0 0 10px 0 #aaa;
+        align-self: center;
+        justify-content: center;
+        position: relative;
+        width: fit-content;
+
+        iframe {
+          border: 0;
+        }
+      }
+    }
+
   }
 
   .list-card:hover {
@@ -80,6 +123,7 @@ body {
     position: absolute;
     align-items: flex-start;
     justify-content: flex-start;
+
     p {
       width: 120px;
       color: #252525;
@@ -113,6 +157,7 @@ body {
     align-items: flex-end;
     justify-content: center;
     text-align: center;
+
     p {
       width: 120px;
       color: #252525;
@@ -138,6 +183,7 @@ body {
     align-items: flex-end;
     justify-content: center;
     text-align: center;
+
     p {
       width: 120px;
       color: #fff;

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import ParticleBackground from 'react-particle-backgrounds';
 
+import { useNavigate } from 'react-router-dom';
+
 import _ from 'lodash';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,6 +33,7 @@ const { Title } = Typography;
 
 export default function Home () {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [link, setLink] = useState('');
     const [selectedTemplate, setSelectedTemplate] = useState('');
     const [selectedVersion, setSelectedVersion] = useState('');
@@ -71,11 +74,12 @@ export default function Home () {
 
         const combinedData = cartesian(templateData?.possibleValues).map((combination) => {
             return {
-                name: combination.join('-'),
+                name: combination.join(' | '),
                 defaultValues: updateObject(templateData?.defaultDynamicFieldsValues, combination.reduce(function (result, field, index) {
                     result[Object.keys(templateData?.possibleValues)[index]] = field;
                     return result;
-                }, {}))
+                }, {})),
+                status: null
             }
         });
 
@@ -88,7 +92,7 @@ export default function Home () {
                     !_.isEmpty(data?.versionName) ? data?.id === selectedVersion && data?.versionName : data?.id === selectedVersion && `Version ${index + 1}`
                 ), (_f) => _f !== false)[0],
                 generation: combinedData
-            })
+            }, navigate)
         );
     }
 
