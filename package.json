@@ -5,6 +5,11 @@
   "main": "index.js",
   "author": "Lorenciano Dramayo",
   "license": "MIT",
+  "engines": {
+    "node": "16.14.0",
+    "npm": "8.x",
+    "yarn": "1.x"
+  },
   "dependencies": {
     "@google-cloud/storage": "^6.5.2",
     "adm-zip": "^0.5.9",
