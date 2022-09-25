@@ -72,7 +72,7 @@ export const requestCreative = (id) => async (dispatch) => {
         }
     } else {
         dispatch(creativeError("Something went wrong when getting partner id."));
-    }
+    } 
 };
 
 export default creative.reducer;
