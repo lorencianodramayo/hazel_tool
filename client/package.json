@@ -2,13 +2,13 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-    "engines": {
+  "engines": {
     "node": "16.14.0",
     "npm": "8.x",
     "yarn": "1.x"
   },
   "dependencies": {
-    "@craco/craco": "7.0.0-alpha.3",
+    "@craco/craco": "6.4.3",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
