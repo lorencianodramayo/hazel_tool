@@ -90,6 +90,7 @@ export default function Home () {
 
         dispatch(saveTemplate
             ({
+                concept: briefData?.name,
                 size: templateData?.size,
                 name: templateData?.name,
                 template: templateData?.url,

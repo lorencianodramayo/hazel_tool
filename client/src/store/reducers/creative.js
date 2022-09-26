@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getCreative, getVariants } from '../../services/api/QATool/creative';
+import { getCreative, getVariants, updateVariants } from '../../services/api/QATool/creative';
 
 const initialState = {
     creative: {
@@ -45,6 +45,18 @@ const creative = createSlice({
             state.variations.fetching = false;
             state.variations.error = { message: payload };
         },
+        filterVariant: (state, { payload }) => {
+            return {
+                ...state,
+                variations: {
+                    ...state.variations,
+                    data: {
+                        ...state.variations.data,
+                            generation: state.variations.data.generation.filter((gen) => gen?.name !== payload)
+                    }
+                },
+            };
+        }
     }
 });
 
@@ -55,6 +67,7 @@ export const {
     initVariations,
     variationsSuccess,
     variationsError,
+    filterVariant,
 } = creative.actions;
 
 export const requestCreative = (id) => async (dispatch) => {
@@ -75,4 +88,16 @@ export const requestCreative = (id) => async (dispatch) => {
     } 
 };
 
+
+export const requestDeleteVariations = (params) => async (dispatch) => {
+   dispatch(initCreative());
+    const { status: creativeStatus } = await updateVariants(params);
+
+    if (creativeStatus === 200) {
+        dispatch(filterVariant(params?.name));
+    }else{
+        dispatch(creativeError("Something went wrong when getting partner id."));
+    }
+
+}
 export default creative.reducer;

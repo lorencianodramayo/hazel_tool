@@ -142,6 +142,7 @@ export const requestTemplates = (params) => async (dispatch) => {
 export const saveTemplate = (params, navigate) => async (dispatch) => {
     dispatch(initSaving());
     const { status: saveStatus, data: saveData } = await setTemplate({ 
+        concept: params?.concept,
         name: params?.name,
         size: params?.size,
         version: params?.version

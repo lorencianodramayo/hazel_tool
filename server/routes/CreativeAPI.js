@@ -21,4 +21,20 @@ router.get("/getVariants", (req, res) => {
     });
 });
 
+router.put("/updateVariants", (req, res) => {
+    const { name, variantId } = req.body;
+
+    VariantsModel.findById(variantId, (err, success) => {
+        if(err){
+            return res.status(500).json({ msg: "Sorry, Internal server error" })
+        }else{
+            VariantsModel.findByIdAndUpdate(variantId, { "generation": success?.generation.filter((data) => data?.name !== name) }, (error, successEdit) => {
+                return error
+                    ? res.status(500).json({ msg: "Sorry, Internal server error" })
+                    : res.json(successEdit);
+            });
+        }
+    }).sort([["_id", 1]]);
+})
+
 module.exports = router;

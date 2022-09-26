@@ -1,20 +1,32 @@
-import React, { useEffect } from 'react';
-import { Row, Col, Divider } from 'antd';
+import React, { useEffect, useState } from 'react';
+import _ from 'lodash';
+
+import { Row, Col, Divider, Layout, Typography, Input, Button, Badge } from 'antd';
+import { ControlOutlined, UnorderedListOutlined, TableOutlined } from '@ant-design/icons';
 
 import { useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { requestDeleteVariations } from '../../store/reducers/creative'; 
+
+// Components
+import IframePreview from '../../Components/IframePreview'
 
 // reducers
 import { requestCreative } from '../../store/reducers/creative';
 
+const { Content } = Layout;
+const { Title, Text } = Typography;
+
 export default function Playground () {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const [isGrid, setGrid] = useState(true);
+    const [search, setSearch] = useState('');
     const { creative: {
         data: creativeData },
         variations: {
-            data: { generation },
+            data: { _id: variantId , generation },
             fetching: variationsFetching }
     } = useSelector((state) => state.creative);
 
@@ -29,29 +41,98 @@ export default function Playground () {
         );
     }
 
+    const handleChangeListView = (e) => {
+        e.preventDefault();
+        setGrid(!isGrid);
+    }
+
+    const handleFilterCreative = (e) => {
+        e.preventDefault();
+        setSearch(e.target.value)
+    }
+
+    const handleDelete = (name, variantId) => {
+        dispatch(requestDeleteVariations({
+            name,
+            variantId
+        }));
+    }
+
     return (
-        <div className="playground">
-            <p>Version {creativeData?.version}</p>
-            <Divider plain>{`${creativeData.size}-${creativeData.name}`}</Divider>
-            <Row gutter={[16, 16]} justify="center">
-                {
-                    !variationsFetching && generation?.map((data, index) =>
-                        <Col key={index} >
-                            <div className="iframe-base">
-                                <div style={{ width: `${creativeData?.size?.split("x")[0]}px` }}><p className="iframe-title">{data?.name}</p></div>
-                                <div className="iframe-container">
-                                    <iframe
-                                        width={creativeData?.size?.split("x")[0]}
-                                        height={creativeData?.size?.split("x")[1]}
-                                        src={`https://storage.googleapis.com/creative-templates/${creativeData?._id}/${creativeData.size}-${creativeData.name}/index.html`} title={data?.ame}
-                                        onLoad={(e) => onLoad(e, data?.defaultValues)}
-                                    />
-                                </div>
-                            </div>
-                        </Col>
-                    )
-                }
-            </Row>
-        </div>
+        <Layout className="playground">
+            <div style={{ padding: '20px 50px 0' }}>
+                <Title level={2} className="playground-title">
+                    {creativeData?.concept}
+                </Title>
+            </div>
+
+            <Divider />
+            <Content style={{ padding: '0 50px 50px' }}>
+                <Row>
+                    <Col span={8}>
+                        <Row gutter={[16, 16]} >
+                            <Col>
+                                <Input placeholder="Name or Keyword" onChange={handleFilterCreative} allowClear />
+                            </Col>
+                            <Col>
+                                <Button
+                                    type="primary"
+                                    icon={<ControlOutlined />}
+                                >
+                                    Filter
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col span={8} offset={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <Row gutter={[16, 16]}>
+                            <Col style={{ alignItems: "center", display: 'flex' }}>
+                                <Row gutter={[8, 8]}>
+                                    <Col>
+                                        <Badge count={!variationsFetching && _.filter(generation, generate => generate?.name?.toLowerCase().includes(search.toLowerCase()))?.length} />
+                                    </Col>
+                                    <Col>
+                                        Combinations
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col>
+                                <Button
+                                    type="primary"
+                                    icon={isGrid ? <UnorderedListOutlined /> : <TableOutlined />}
+                                    onClick={handleChangeListView}
+                                >
+                                    {isGrid ? "List" : "Grid"}
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+                <Divider plain className="playground-divider">
+                    <Title level={5} style={{ marginBottom: 0 }}>{`${creativeData.size}-${creativeData.name}`}</Title>
+                    <Text type="warning">{creativeData?.version}</Text>
+                </Divider>
+
+                <Row gutter={[16, 16]} justify="center">
+                    {
+                        !variationsFetching && _.filter(generation, generate => generate?.name?.toLowerCase().includes(search.toLowerCase()))?.map((data, index) =>
+                            <IframePreview 
+                                key={index} 
+                                title={data?.name}
+                                width={creativeData?.size?.split("x")[0]} 
+                                height={creativeData?.size?.split("x")[1]} 
+                                grid={isGrid}
+                                defaultValues={data?.defaultValues}
+                                onLoad={onLoad}
+                                size={creativeData?.size}
+                                name={creativeData?.name}
+                                previewId={creativeData?._id}
+                                onDelete={() => handleDelete(data?.name, variantId)}
+                            />
+                        )
+                    }
+                </Row>
+            </Content>
+        </Layout>
     )
 }
