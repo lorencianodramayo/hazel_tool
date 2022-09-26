@@ -71,8 +71,7 @@ export default function Home () {
     }
 
     const handleGenerate = () => {
-
-        const combinedData = cartesian(templateData?.possibleValues).map((combination) => {
+        const combinedData = !_.isEmpty(templateData?.possibleValues) ? cartesian(templateData?.possibleValues).map((combination) => {
             return {
                 name: combination.join(' | '),
                 defaultValues: updateObject(templateData?.defaultDynamicFieldsValues, combination.reduce(function (result, field, index) {
@@ -81,7 +80,13 @@ export default function Home () {
                 }, {})),
                 status: null
             }
-        });
+        }) : [
+            {
+                name: 'Default',
+                defaultValues: templateData?.defaultDynamicFieldsValues,
+                status: null
+            }
+        ];
 
         dispatch(saveTemplate
             ({
