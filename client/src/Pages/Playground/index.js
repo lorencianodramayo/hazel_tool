@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Divider } from 'antd';
 
 import { useParams } from 'react-router-dom';
 
@@ -31,10 +31,12 @@ export default function Playground () {
 
     return (
         <div className="playground">
-            <Row gutter={[16, 16]}>
+            <p>Version {creativeData?.version}</p>
+            <Divider plain>{`${creativeData.size}-${creativeData.name}`}</Divider>
+            <Row gutter={[16, 16]} justify="center">
                 {
                     !variationsFetching && generation?.map((data, index) =>
-                        <Col key={index}>
+                        <Col key={index} >
                             <div className="iframe-base">
                                 <div style={{ width: `${creativeData?.size?.split("x")[0]}px` }}><p className="iframe-title">{data?.name}</p></div>
                                 <div className="iframe-container">
