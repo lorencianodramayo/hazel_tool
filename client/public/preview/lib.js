@@ -77,6 +77,7 @@
     ),
         window.addEventListener("message", function (e) {
             var t = e.data;
+            console.log(t)
             if (t) {
                 var n,
                     i,
@@ -102,7 +103,7 @@
                         break;
                     default:
                         !(function (e) {
-                            w.setValues(e);
+                            w.setValues(e?.data);
                         })(t);
                 }
             }

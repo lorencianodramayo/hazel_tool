@@ -73,7 +73,7 @@ export default function Home () {
     const handleGenerate = () => {
         const combinedData = !_.isEmpty(templateData?.possibleValues) ? cartesian(templateData?.possibleValues).map((combination) => {
             return {
-                name: combination.join(' | '),
+                name: `max | ${combination.join(' | ')}`,
                 defaultValues: updateObject(templateData?.defaultDynamicFieldsValues, combination.reduce(function (result, field, index) {
                     result[Object.keys(templateData?.possibleValues)[index]] = field;
                     return result;

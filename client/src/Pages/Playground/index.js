@@ -34,13 +34,6 @@ export default function Playground () {
         dispatch(requestCreative({ creativeId: id }));
     }, [id, dispatch]);
 
-    const onLoad = (e, data) => {
-        e.target.contentWindow.postMessage(
-            data,
-            e.target.src
-        );
-    }
-
     const handleChangeListView = (e) => {
         e.preventDefault();
         setGrid(!isGrid);
@@ -123,11 +116,11 @@ export default function Playground () {
                                 height={creativeData?.size?.split("x")[1]} 
                                 grid={isGrid}
                                 defaultValues={data?.defaultValues}
-                                onLoad={onLoad}
                                 size={creativeData?.size}
                                 name={creativeData?.name}
                                 previewId={creativeData?._id}
                                 onDelete={() => handleDelete(data?.name, variantId)}
+                                index={index}
                             />
                         )
                     }
