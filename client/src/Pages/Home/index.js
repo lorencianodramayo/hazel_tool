@@ -71,9 +71,26 @@ export default function Home () {
     }
 
     const handleGenerate = () => {
-        const combinedData = !_.isEmpty(templateData?.possibleValues) ? cartesian(templateData?.possibleValues).map((combination) => {
+        const combinedMaxData = !_.isEmpty(templateData?.possibleValues) ? cartesian(templateData?.possibleValues).map((combination) => {
             return {
-                name: `max | ${combination.join(' | ')}`,
+                name: `Max | ${combination.join(' | ')}`,
+                defaultValues: updateObject(templateData?.defaultDynamicFieldsValues, combination.reduce(function (result, field, index) {
+                    result[Object.keys(templateData?.possibleValues)[index]] = field;
+                    return result;
+                }, {})),
+                status: null
+            }
+        }) : [
+            {
+                name: 'Default',
+                defaultValues: templateData?.defaultDynamicFieldsValues,
+                status: null
+            }
+        ];
+
+        const combinedMinData = !_.isEmpty(templateData?.possibleValues) ? cartesian(templateData?.possibleValues).map((combination) => {
+            return {
+                name: `Min | ${combination.join(' | ')}`,
                 defaultValues: updateObject(templateData?.defaultDynamicFieldsValues, combination.reduce(function (result, field, index) {
                     result[Object.keys(templateData?.possibleValues)[index]] = field;
                     return result;
@@ -97,7 +114,7 @@ export default function Home () {
                 version: _.filter(_.filter(briefData?.templates, (data) => data?._id === selectedTemplate)[0]?.templateVersion?.map((data, index) =>
                     !_.isEmpty(data?.versionName) ? data?.id === selectedVersion && data?.versionName : data?.id === selectedVersion && `Version ${index + 1}`
                 ), (_f) => _f !== false)[0],
-                generation: combinedData
+                generation: combinedMaxData.concat(combinedMinData)
             }, navigate)
         );
     }
