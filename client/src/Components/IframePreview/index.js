@@ -58,6 +58,8 @@ export default function IframePreview ({
             },
             e.target.src
         );
+
+        document.addEventListener("visibilitychange", () => setPause(false));
     }
 
     return (
