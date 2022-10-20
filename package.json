@@ -6,8 +6,8 @@
   "author": "Lorenciano Dramayo",
   "license": "MIT",
   "engines": {
-    "node": "16.14.0",
-    "npm": "6.14.15",
+    "node": "^16.14.0",
+    "npm": "^6.14.15",
     "yarn": "1.x"
   },
   "dependencies": {
