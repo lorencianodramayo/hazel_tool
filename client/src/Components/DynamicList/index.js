@@ -16,6 +16,7 @@ import {
   InputNumber,
   Popover,
   Button,
+  Menu,
 } from "antd";
 
 import {
@@ -38,6 +39,7 @@ export default function DynamicList({
   onGenerate,
   dynamicElements,
   defaultValues,
+  languages
 }) {
   const [openModal, setOpenModal] = useState(false);
   const [openPopover, setOpenPopover] = useState(false);
@@ -59,6 +61,7 @@ export default function DynamicList({
           </p>
         </div>
         <Popover
+          overlayClassName="language-overlay"
           placement="leftTop"
           title={
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -70,7 +73,9 @@ export default function DynamicList({
               </span>
             </div>
           }
-          content={"hello"}
+          content={<Menu>
+            {languages?.map((data, index) => <Menu.Item key={index}>{data?.name}</Menu.Item>)}
+          </Menu>}
           trigger="click"
           open={openPopover}
           onOpenChange={handleOpenChange}

@@ -7,7 +7,7 @@ export default function GlobalModal({ title, isVisible, onClose, footer, compone
     <Modal
         title={title}
         centered
-        visible={isVisible}
+        open={isVisible}
         onCancel={onClose}
         footer={footer}
       >

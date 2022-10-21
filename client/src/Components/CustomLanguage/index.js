@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
-import { Button, Form, Input } from "antd";
-// import axios from 'axios';
+import { Button, Form, Input, message } from "antd";
+
+import { requestAddLanguage } from '../../store/reducers/language';
+
+import { useDispatch } from "react-redux";
 
 const { TextArea } = Input;
 
 const CustomLanguage = () => {
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -12,7 +16,9 @@ const CustomLanguage = () => {
   }, [form]);
 
   const onFinish = (values) => {
-    console.log(values);
+    dispatch(requestAddLanguage(values));
+
+    message.success(`${values?.name} language has been saved!`);
 
     form.resetFields();
   };

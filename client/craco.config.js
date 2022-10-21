@@ -24,6 +24,7 @@ module.exports = {
         '/AdlibAPI': 'http://localhost:8080',
         '/TemplateAPI': 'http://localhost:8080',
         '/CreativeAPI': 'http://localhost:8080',
+        '/LanguageAPI': 'http://localhost:8080',
       },
       onBeforeSetupMiddleware: undefined,
       onAfterSetupMiddleware: undefined,

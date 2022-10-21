@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import ParticleBackground from 'react-particle-backgrounds';
 
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // reducers
 import { requestTemplates, requestBrief, resetAll, saveTemplate } from '../../store/reducers/templates';
+import { requestGetLanguage } from '../../store/reducers/language';
 
 // Components
 import SearchInput from '../../Components/SearchInput';
@@ -32,6 +33,7 @@ import { settings4 } from '../../services/utils/extra/background';
 const { Title } = Typography;
 
 export default function Home () {
+    const mounted = useRef();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [link, setLink] = useState('');
@@ -43,6 +45,8 @@ export default function Home () {
         brief: { data: briefData, fetching: isBriefFetching }, template: { data: templateData, fetching: isTemplateFetching }
     } = useSelector((state) => state.templates);
 
+    const { data: languages } = useSelector((state) => state.language)
+
     const handleLinkChange = (e) => {
         const { value } = e.target;
         dispatch(resetAll());
@@ -51,6 +55,13 @@ export default function Home () {
         setLink(value);
         setSelectedVersion('');
     }
+
+    useEffect(() => {
+        if (!mounted.current) {
+            dispatch(requestGetLanguage());
+            mounted.current = true;
+        }
+    }, [dispatch]);
 
     const handleTemplateChange = (e) => setSelectedTemplate(e);
 
@@ -174,7 +185,7 @@ export default function Home () {
                 title={`${templateData?.size}-${templateData?.name}`}
                 onClose={handleDrawer}
                 open={drawerOpen && !_.isEmpty(templateData)}
-                component={<DynamicList onClose={handleDrawer} onGenerate={handleGenerate} dynamicElements={templateData?.dynamicElements} defaultValues={templateData?.defaultDynamicFieldsValues} />}
+                component={<DynamicList onClose={handleDrawer} onGenerate={handleGenerate} dynamicElements={templateData?.dynamicElements} defaultValues={templateData?.defaultDynamicFieldsValues} languages={languages} />}
                 placement="right"
             />
         </>
